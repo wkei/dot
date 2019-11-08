@@ -49,8 +49,17 @@ Plug 'jiangmiao/auto-pairs'
 
 " code
 Plug 'dense-analysis/ale'
-  let g:ale_linter_aliases = {'vue': ['vue', 'javascript']}
-  let g:ale_linters = {'vue': ['eslint', 'vls']}
+  let g:ale_linter_aliases = {
+    \ 'vue': ['vue', 'javascript'],
+    \ 'svelte': ['css', 'javascript']
+    \ }
+  let g:ale_linters = {
+    \ 'vue': ['eslint', 'vls'],
+    \ 'svelte': ['stylelint', 'eslint']
+    \ }
+  " let g:ale_fixers = {'svelte': ['eslint', 'prettier', 'prettier_standard']}
+
+Plug 'evanleck/vim-svelte'
 
 call plug#end()
 """"""""""""""""""""""""" plugins
@@ -146,10 +155,13 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> <CR>
         \ defx#do_action('open', 'wincmd w \| drop')
   nnoremap <silent><buffer><expr> v defx#do_action('open', 'vsplit')
-  nnoremap <silent><buffer><expr> l defx#do_action('open_or_close_tree')
+  nnoremap <silent><buffer><expr> o defx#do_action('open_or_close_tree')
   " navgation
-  nnoremap <silent><buffer><expr> h defx#do_action('cd', ['..'])
+  nnoremap <silent><buffer><expr> u defx#do_action('cd', ['..'])
   nnoremap <silent><buffer><expr> ~ defx#do_action('cd', [getcwd()])
+  nnoremap <silent><buffer><expr> d defx#do_action('new_directory')
+	nnoremap <silent><buffer><expr> n defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> r defx#do_action('rename')
 endfunction
 
 " prettier
