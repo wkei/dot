@@ -1,72 +1,72 @@
+" ================================================
 call plug#begin('~/.vim/plugged')
 
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
-
-Plug 'kyazdani42/nvim-tree.lua'
-
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ayu-theme/ayu-vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tomtom/tcomment_vim'
+
+Plug 'posva/vim-vue'
+let g:vue_pre_processors = ['sass', 'scss', 'typescript']
+
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'maxmellon/vim-jsx-pretty'
 
 call plug#end()
-
-let g:lua_tree_auto_open = 1
-let g:lua_tree_icons = {
-    \ 'folder': {
-    \   'default': "└─",
-    \   'open': "└─"
-    \   }
-    \ }
-
-lua require("lsp")
-" Use completion-nvim in every buffer
-autocmd BufEnter * lua require'completion'.on_attach()
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-" Avoid showing message extra message when using completion
-set shortmess+=c
+" ================================================
 
 
-" ui
-syntax on
-set number
-set cursorline
-set termguicolors
-" let ayucolor="light"  " for light version of theme
-" let ayucolor="mirage" " for mirage version of theme
-let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
+" ================================================
+" Coc Config
+nmap <C-l> :CocList<CR>
+nmap <C-p> :CocList files<CR>
+nmap <C-e> :CocCommand explorer<CR>
 
-" make < > indent repeatable
-xnoremap < <gv
-xnoremap > >gv
+let g:coc_global_extensions = [
+  \'coc-json',
+  \'coc-explorer',
+  \'coc-git',
+  \'coc-eslint',
+  \'coc-lists',
+  \'coc-vetur',
+  \'coc-tsserver',
+  \'coc-tabnine',
+  \'coc-css'
+  \]
 
-" make backspace behave properly in insert mode
-set backspace=indent,eol,start
+autocmd FileType scss setl iskeyword+=@-@
+" ================================================
 
-" enable mouse
+
+" ================================================
+syntax on 
+if exists('+termguicolors')
+  set termguicolors
+  " let ayucolor="mirage"
+  " let ayucolor="light"
+  let ayucolor="dark"
+  colorscheme ayu
+endif
+" ================================================
+
+
+" ================================================
+set number 
+" set cursorline
+set colorcolumn=81
 set mouse=a
-
-" tab
 set expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-
-" ingore case when searching
-set ignorecase
-set smartcase
-
-
-" share clipboard with os
 set clipboard^=unnamed,unnamedplus
-
-" remember lastest line
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-endif
+" ================================================
 
 
-:set noswapfile
+" ================================================
+let mapleader = "," 
+
+" make < > indent repeatable
+xnoremap < <gv
+xnoremap > >gv
+" ================================================
